@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmbeddingService.Model
+namespace EmbeddingService.Model.EmbeddingOption
 {
     public class AzureOpenAIOptions
     {
