@@ -1,7 +1,7 @@
-﻿namespace RAG_API.Service
+﻿namespace EmbeddingService.Interfaces
 {
     public interface ILoadMemoryService
     {
-        public Task<string> GenerateEmbedding(string info);
+        
     }
 }

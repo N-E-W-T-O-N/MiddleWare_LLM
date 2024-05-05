@@ -2,6 +2,6 @@
 {
     public interface IDocumentHandler
     {
-        Task ProcessDocument(IFormFile formFile);
+        Task<string> ProcessDocument(IFormFile formFile);
     }
 }
