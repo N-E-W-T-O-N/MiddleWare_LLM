@@ -2,7 +2,7 @@ using EmbeddingService.Interfaces;
 using EmbeddingService.Services.Embedding;
 using EmbeddingService.Services.Extension;
 using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.SemanticKernel;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.SemanticKernel.Memory;
 using RAG_API.Interfaces;
 using RAG_API.Service;
@@ -10,8 +10,10 @@ namespace RAG_API
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
+            var policy = "concurrent";
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddHealthChecks();
@@ -38,7 +40,15 @@ namespace RAG_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            builder.Services.AddRateLimiter(srv =>
+            srv.AddConcurrencyLimiter(policy, _ =>
+            {
+                _.PermitLimit = 4;
+                _.QueueLimit = 10;
+                _.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+            })
 
+            );
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
