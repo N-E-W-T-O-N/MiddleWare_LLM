@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAG_API", "RAG_API\RAG_API.csproj", "{FD57BCAB-3E27-474B-9D55-291DDB0F8AE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RAG_API", "RAG_API\RAG_API.csproj", "{FD57BCAB-3E27-474B-9D55-291DDB0F8AE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmbeddingService", "EmbeddingService\EmbeddingService.csproj", "{CA390BB2-D0F9-4DF2-B48E-5FD0E9624B81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatManagement", "ChatMangement\ChatManagement.csproj", "{AA671B1A-7A2D-4A23-A85A-A9EEDA726EB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CA390BB2-D0F9-4DF2-B48E-5FD0E9624B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA390BB2-D0F9-4DF2-B48E-5FD0E9624B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA390BB2-D0F9-4DF2-B48E-5FD0E9624B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA671B1A-7A2D-4A23-A85A-A9EEDA726EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA671B1A-7A2D-4A23-A85A-A9EEDA726EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA671B1A-7A2D-4A23-A85A-A9EEDA726EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA671B1A-7A2D-4A23-A85A-A9EEDA726EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
