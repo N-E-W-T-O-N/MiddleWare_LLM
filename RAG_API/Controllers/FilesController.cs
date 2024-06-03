@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.IO.Pipelines;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using RAG_API.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,14 +41,15 @@ namespace RAG_API.Controllers
         }
 
         // Streaming 
-       /*
-        [Routing("/streaming")]
+        // Version
+        /*
+        [Route("api/streaming")]
         [HttpPost]
-        public async Task<IActionResult> PostFileStreamTask()
+        public async Task PostFileStreamTask(PipeReader boby)
         {
-            var memo = new MemoryStream(); 
-            await Request.Body.CopyToAsync(memo);
-            throw new NotImplementedException();
+            string tempfile = "";
+            using var stream = System.IO.File.OpenWrite(tempfile);
+            await boby.CopyToAsync(stream);
         }*/
 
 

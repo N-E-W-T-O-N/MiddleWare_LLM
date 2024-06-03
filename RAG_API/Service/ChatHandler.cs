@@ -1,6 +1,6 @@
-﻿using ChatManagement.Model;
+﻿using ChatManagement.Interface;
+using ChatManagement.Model;
 using ChatManagement.Model.Chat;
-using ChatManagement.Service.Chat;
 using Newtonsoft.Json;
 using RAG_API.Interfaces;
 

@@ -1,5 +1,5 @@
 ﻿using Azure.AI.OpenAI;
-using ChatManagement.Model;
+using ChatManagement.Interface;
 using ChatManagement.Model.Chat;
 using ChatManagement.Model.ChatModel;
 using Microsoft.Extensions.Options;
@@ -84,9 +84,5 @@ namespace ChatManagement.Service.Chat
             else return new OpenAIChatCompletionService(model.OpenAI.Deployment,
                     model.OpenAI.APIKey);
         }
-    }
-    public interface IChatManagement
-    {
-        Task<ChatOutput> ChatHandling(ChatInput value);
     }
 }

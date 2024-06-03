@@ -3,7 +3,6 @@ using EmbeddingService.Services.Embedding;
 using EmbeddingService.Services.Extension;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Memory;
 using RAG_API.Interfaces;
 using RAG_API.Service;
@@ -31,10 +30,10 @@ namespace RAG_API
 
 
 
-            var k = Kernel.CreateBuilder();
+            builder.Services.Configure<ChatModel>(builder.Configuration.GetSection("ChatModel"));
             k.Build().Services.GetService<IChatCompletionService>();
             
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(config => config.Filters.Add<ChatInputValidationFilter>());
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -84,9 +83,12 @@ namespace RAG_API
         /// <returns></returns>
         public static IServiceCollection AddDependency(this IServiceCollection services)
         {
+
             // Add services to the container.
             services.AddTransient<IDocumentHandler, DocumentHandler>();
-            services.AddTransient<IEmbeddingGenerator, EmbeddingGenerator > ();
+            services.AddTransient<IEmbeddingGenerator, EmbeddingGenerator>();
+            services.AddTransient<IChatHandler, ChatHandler>();
+            services.AddTransient<IChatManagement, ChatManagement.Service.Chat.ChatManagement>();
             return services;
         }
     }

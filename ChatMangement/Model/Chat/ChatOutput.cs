@@ -1,6 +1,4 @@
-﻿using ChatManagement.Model.Chat;
-
-namespace ChatManagement.Model;
+﻿namespace ChatManagement.Model.Chat;
 
 public class ChatOutput
 {
