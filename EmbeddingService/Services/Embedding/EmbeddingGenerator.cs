@@ -28,7 +28,7 @@ namespace EmbeddingService.Services.Embedding
 
                 //string result = await loadMemoryService.GenerateEmbedding(info);
 
-                string[] parseDate = BlingFireUtils.GetSentences(info).ToArray();
+                string[] parseDate = BlingFireUtils2.GetSentences(info).ToArray();
 
                 foreach (var value in parseDate)
                 {
