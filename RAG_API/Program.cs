@@ -1,11 +1,15 @@
+using System.Threading.RateLimiting;
+using ChatManagement.Interface;
+using ChatManagement.Model.ChatModel;
 using EmbeddingService.Interfaces;
 using EmbeddingService.Services.Embedding;
-using EmbeddingService.Services.Extension;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.SemanticKernel.Memory;
 using RAG_API.Interfaces;
 using RAG_API.Service;
+using SemanticKernelFactory;
+
 namespace RAG_API
 {
     public class Program
@@ -21,20 +25,14 @@ namespace RAG_API
             // Add Semantic Kernel
             //builder.Services.AddSingleton<IKernelBuilder>(serviceProvider => Kernel.CreateBuilder());
 
- 
 #pragma warning disable SKEXP0001
-            builder.Services.AddSingleton<ISemanticTextMemory>(svcProv =>
-                new MemoryBuilder()
-                    .WithTextEmbeddingGeneration(ServiceExtension.EmbeddingGenerator(builder.Configuration))
-                    .WithMemoryStore(ServiceExtension.PersistentMemory(builder.Configuration))
-                    .Build());
+            builder.Services.AddSingleton<ISemanticTextMemory>
+                (svcProv => SkFactory.CreateSkMemory(builder.Configuration));
 #pragma warning restore SKEXP0001
 
 
-
             builder.Services.Configure<ChatModel>(builder.Configuration.GetSection("ChatModel"));
-            k.Build().Services.GetService<IChatCompletionService>();
-            
+
             builder.Services.AddControllers(config => config.Filters.Add<ChatInputValidationFilter>());
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +47,7 @@ namespace RAG_API
             })
 
             );
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

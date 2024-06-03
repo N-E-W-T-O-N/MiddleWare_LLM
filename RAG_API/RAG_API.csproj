@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChatMangement\ChatManagement.csproj" />
     <ProjectReference Include="..\EmbeddingService\EmbeddingService.csproj" />
+    <ProjectReference Include="..\SemanticKernelFactory\SemanticKernelFactory.csproj" />
   </ItemGroup>
 
 </Project>
