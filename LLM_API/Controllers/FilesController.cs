@@ -1,11 +1,11 @@
 ﻿using System.IO.Pipelines;
 using System.Net;
+using LLM_API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using RAG_API.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RAG_API.Controllers
+namespace LLM_API.Controllers
 {
 
     [ApiController]
@@ -15,7 +15,7 @@ namespace RAG_API.Controllers
 
         public FilesController(IDocumentHandler documentHandler)
         {
-            _documentHandler= documentHandler;
+            _documentHandler = documentHandler;
         }
         [Route("api/file")]
         // POST api/<FilesContoller>

@@ -1,12 +1,10 @@
-﻿using ChatManagement.Model;
-using ChatManagement.Model.Chat;
+﻿using ChatManagement.Model.Chat;
+using LLM_API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using RAG_API.Interfaces;
-using RAG_API.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RAG_API.Controllers
+namespace LLM_API.Controllers
 {
 
     [ApiController]

@@ -1,7 +1,7 @@
 ﻿using EmbeddingService.Interfaces;
-using RAG_API.Interfaces;
+using LLM_API.Interfaces;
 
-namespace RAG_API.Service
+namespace LLM_API.Service
 {
     public class DocumentHandler : IDocumentHandler
     {

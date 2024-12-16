@@ -1,4 +1,4 @@
-﻿namespace RAG_API.Interfaces
+﻿namespace LLM_API.Interfaces
 {
     public interface IDocumentHandler
     {

@@ -1,10 +1,10 @@
 ﻿using ChatManagement.Interface;
 using ChatManagement.Model;
 using ChatManagement.Model.Chat;
+using LLM_API.Interfaces;
 using Newtonsoft.Json;
-using RAG_API.Interfaces;
 
-namespace RAG_API.Service
+namespace LLM_API.Service
 {
     public class ChatHandler(IChatManagement chatManagement) : IChatHandler
     {

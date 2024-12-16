@@ -3,9 +3,9 @@ using ChatManagement.Model.Chat;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace RAG_API.Service
+namespace LLM_API.Service
 {
-    public class ChatInputValidationFilter : Microsoft.AspNetCore.Mvc.Filters.IAsyncActionFilter
+    public class ChatInputValidationFilter : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {

@@ -3,14 +3,14 @@ using ChatManagement.Interface;
 using ChatManagement.Model.ChatModel;
 using EmbeddingService.Interfaces;
 using EmbeddingService.Services.Embedding;
+using LLM_API.Interfaces;
+using LLM_API.Service;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.SemanticKernel.Memory;
-using RAG_API.Interfaces;
-using RAG_API.Service;
 using SemanticKernelFactory;
 
-namespace RAG_API
+namespace LLM_API
 {
     public class Program
     {
@@ -26,7 +26,7 @@ namespace RAG_API
             //builder.Services.AddSingleton<IKernelBuilder>(serviceProvider => Kernel.CreateBuilder());
 
 #pragma warning disable SKEXP0001
-            builder.Services.AddSingleton<ISemanticTextMemory>
+            builder.Services.AddSingleton
                 (svcProv => SkFactory.CreateSkMemory(builder.Configuration));
 #pragma warning restore SKEXP0001
 
@@ -65,7 +65,7 @@ namespace RAG_API
             app.MapControllers();
             app.MapHealthChecks("/healthz");
             //Test API is working or not 
-            app.MapGet("/", async (HttpContext context) =>
+            app.MapGet("/", async (context) =>
             {
                 await context.Response.WriteAsync("API WORKING");
             }

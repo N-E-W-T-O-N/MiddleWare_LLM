@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RAG_API", "RAG_API\RAG_API.csproj", "{FD57BCAB-3E27-474B-9D55-291DDB0F8AE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LLM_API", "LLM_API\LLM_API.csproj", "{FD57BCAB-3E27-474B-9D55-291DDB0F8AE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmbeddingService", "EmbeddingService\EmbeddingService.csproj", "{CA390BB2-D0F9-4DF2-B48E-5FD0E9624B81}"
 EndProject
