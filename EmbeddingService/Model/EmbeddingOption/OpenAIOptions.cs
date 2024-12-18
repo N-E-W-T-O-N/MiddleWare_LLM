@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmbeddingService.Model
+namespace EmbeddingService.Model.EmbeddingOption
 {
     public class OpenAIOptions
     {
