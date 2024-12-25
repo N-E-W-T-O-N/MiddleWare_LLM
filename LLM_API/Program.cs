@@ -1,6 +1,7 @@
 using System.Threading.RateLimiting;
 using ChatManagement.Interface;
-using ChatManagement.Model.ChatModel;
+using ChatService.Interface;
+using ChatService.Model;
 using EmbeddingService.Interfaces;
 using EmbeddingService.Services.Embedding;
 using LLM_API.Interfaces;
@@ -94,9 +95,10 @@ namespace LLM_API
         {
 
             // Add services to the container.
+            services.AddTransient<IChatHandler, ChatHandler>();
             services.AddTransient<IDocumentHandler, DocumentHandler>();
             services.AddTransient<IEmbeddingGenerator, EmbeddingGenerator>();
-            services.AddTransient<IChatHandler, ChatHandler>();
+            services.AddTransient<IChatService, ChatService.Service.ChatModelService>();
             services.AddTransient<IChatManagement, ChatManagement.Service.Chat.ChatManagement>();
             return services;
         }

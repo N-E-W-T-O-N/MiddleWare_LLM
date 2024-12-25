@@ -1,7 +1,8 @@
 ﻿using Azure.AI.OpenAI;
 using ChatManagement.Interface;
 using ChatManagement.Model.Chat;
-using ChatManagement.Model.ChatModel;
+using ChatService.Interface;
+using ChatService.Model;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
@@ -19,28 +20,13 @@ namespace ChatManagement.Service.Chat
         private readonly IChatCompletionService _chatService;
         private readonly PromptExecutionSettings _promptSettings;
 
-        public ChatManagement(IOptions<ChatModel> model,ISemanticTextMemory skMemory)
+        public ChatManagement(IOptions<ChatModel> model,ISemanticTextMemory skMemory,IChatService chat)
 
         {
             _skMemory = skMemory;
-            _chatService = CreateChatService(model.Value);
-            _promptSettings = CreatePromptExecutionSetting(model.Value);
+            _chatService = chat.CreateChatService(model.Value);
+            _promptSettings = chat.CreatePromptExecutionSetting(model.Value);
         }
-
-        private PromptExecutionSettings CreatePromptExecutionSetting(ChatModel chat)
-        {
-
-            PromptExecutionSettings setting = chat.Type switch
-
-            {
-                ModelServiceType.AzureOpenAI => new OpenAIPromptExecutionSettings()
-                    ,
-                //ModelServiceType.H = new HuggingFacePromptExecutionSettings(),
-                _ => new  PromptExecutionSettings()
-            };
-            return setting;
-        }
-
 
         public async Task<ChatOutput> ChatHandling(ChatInput value)
         {
@@ -76,13 +62,6 @@ namespace ChatManagement.Service.Chat
             return output;
         }
 
-        private IChatCompletionService CreateChatService(ChatModel model)
-        {
-            if (model.Type == ModelServiceType.AzureOpenAI)
-                return new AzureOpenAIChatCompletionService(model.AzureOpenAI.Deployment, model.AzureOpenAI.EndPoint,
-                    model.AzureOpenAI.APIKey);
-            else return new OpenAIChatCompletionService(model.OpenAI.Deployment,
-                    model.OpenAI.APIKey);
-        }
+        
     }
 }
