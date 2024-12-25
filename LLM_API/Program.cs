@@ -8,7 +8,6 @@ using LLM_API.Interfaces;
 using LLM_API.Service;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.SemanticKernel.Memory;
 using SemanticKernelFactory;
 
 namespace LLM_API
@@ -23,8 +22,6 @@ namespace LLM_API
 
             builder.Services.AddHealthChecks();
             builder.Services.AddDependency();
-            // Add Semantic Kernel
-            //builder.Services.AddSingleton<IKernelBuilder>(serviceProvider => Kernel.CreateBuilder());
 
 #pragma warning disable SKEXP0001
             builder.Services.AddSingleton
@@ -34,17 +31,19 @@ namespace LLM_API
 
             builder.Services.Configure<ChatModel>(builder.Configuration.GetSection("ChatModel"));
 
-            builder.Services.AddControllers(config => config.Filters.Add<ChatInputValidationFilter>());
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Apply filter to all API ENDPOINT 
+            builder.Services.AddControllers();
+            //builder.Services.AddControllers(config => config.Filters.Add<ChatInputValidationFilter>());
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             builder.Services.AddRateLimiter(srv =>
-            srv.AddConcurrencyLimiter(policy, _ =>
+            srv.AddConcurrencyLimiter(policy, config =>
             {
-                _.PermitLimit = 4;
-                _.QueueLimit = 10;
-                _.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                config.PermitLimit = 4;
+                config.QueueLimit = 10;
+                config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
             })
 
             );
@@ -89,8 +88,7 @@ namespace LLM_API
         /// <summary>
         /// Define your Own Dependency Here
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddDependency(this IServiceCollection services)
         {
 

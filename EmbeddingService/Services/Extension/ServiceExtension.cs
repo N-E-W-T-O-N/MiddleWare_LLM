@@ -3,20 +3,24 @@ using EmbeddingService.Model.MemoryOption;
 using EmbeddingService.Services.Embedding;
 using EmbeddingService.Services.Memory;
 using Microsoft.Extensions.Configuration;
+using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Connectors.HuggingFace;
+using Microsoft.SemanticKernel.Connectors.Ollama;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Connectors.Qdrant;
 using Microsoft.SemanticKernel.Embeddings;
 using Microsoft.SemanticKernel.Memory;
+using OllamaSharp;
 
 namespace EmbeddingService.Services.Extension
 {
-    public static class ServiceExtension
-    {
 #pragma warning disable SKEXP0001
 #pragma warning disable SKEXP0010
 #pragma warning disable SKEXP0020
 #pragma warning disable SKEXP0070
+    public static class ServiceExtension
+    {
+
         public static IMemoryStore PersistentMemory(
 
             ConfigurationManager configuration)
@@ -48,7 +52,7 @@ namespace EmbeddingService.Services.Extension
             section.Bind(embedSrv);
 
 
-            ITextEmbeddingGenerationService ser = embedSrv.EmbeddingType switch
+                ITextEmbeddingGenerationService ser = embedSrv.EmbeddingType switch
             {
 
                 EmbeddingServiceType.AzureOpenAI => new AzureOpenAITextEmbeddingGenerationService(embedSrv.AzureOpenAI.Deployment,
@@ -61,7 +65,8 @@ namespace EmbeddingService.Services.Extension
                     new Uri(embedSrv.HuggingFace.EndPoint),
                     embedSrv.HuggingFace.ApiKey),
 
-                //EmbeddingType.Ollama => new TextEmbedd,
+                EmbeddingServiceType.Ollama => new OllamaTextEmbeddingGenerationService( new OllamaApiClient(embedSrv.Ollama.endpoint,embedSrv.Ollama.model)), 
+
                 _ => throw new ArgumentException("NOT ALL VALES ARE PASSED")
 
             };
@@ -71,10 +76,9 @@ namespace EmbeddingService.Services.Extension
             return ser;
         }
 
+    }
 #pragma warning restore SKEXP0070
 #pragma warning restore SKEXP0020
 #pragma warning restore SKEXP0010
 #pragma warning restore SKEXP0001
-
-    }
 }

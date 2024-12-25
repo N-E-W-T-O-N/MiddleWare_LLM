@@ -1,7 +1,7 @@
 ﻿using EmbeddingService.Model.EmbeddingOption;
 
 namespace EmbeddingService.Services.Embedding;
-
+#nullable enable
 /// <summary>
 /// Configuration settings for the chat store.
 /// </summary>

@@ -5,7 +5,7 @@
 public class Message
 {
     public static string User = "user";
-    public static string system = "system";
+    public static string System = "system";
     public string role { get; set; }
     public string content { get; set; }
 }
