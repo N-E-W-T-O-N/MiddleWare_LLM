@@ -1,7 +1,8 @@
 ﻿using BlingFire;
 using EmbeddingService.Interfaces;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using Microsoft.SemanticKernel.Memory;
 
 using Xceed.Words.NET;
@@ -53,11 +54,18 @@ namespace EmbeddingService.Services.Embedding
             {
                 using (PdfReader reader = new PdfReader(fileInfo.FullName))
                 {
+                    PdfDocument pdfDoc = new iText.Kernel.Pdf.PdfDocument(reader);
                     StringWriter textWriter = new();
-                    for (int page = 1; page <= reader.NumberOfPages; page++)
+                    for (int page = 1; page <= pdfDoc.GetNumberOfPages(); page++)
                     {
-                        string text = PdfTextExtractor.GetTextFromPage(reader, page);
-                        textWriter.WriteLine(text);
+                        //string text = PdfTextExtractor.GetTextFromPage(pdfDoc, page);
+
+                        ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+                        string currentText = PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(page), strategy);
+
+                        //currentText = Encoding.UTF8.GetString(ASCIIEncoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)));
+
+                        textWriter.WriteLine(currentText);
                     }
                     info = textWriter.ToString();
                 }
@@ -74,15 +82,16 @@ namespace EmbeddingService.Services.Embedding
             // FOR TXT FILE 
             else if (fileInfo.Extension.Equals(".txt") || fileInfo.Extension.Equals(".json"))
             {
-                using (TextReader tx = new StreamReader(fileInfo.FullName))
-                {
-                    info = tx.ReadToEnd();
-                }
+                using TextReader tx = new StreamReader(fileInfo.FullName);
+                info = tx.ReadToEnd();
                 //File.ReadAllText(fileInfo.FullName);
             }
 
+            
             else if (fileInfo.Extension.Equals(".xlsx"))
-            { }
+            {
+                throw new NotImplementedException();
+            }
             return info;
         }
 
