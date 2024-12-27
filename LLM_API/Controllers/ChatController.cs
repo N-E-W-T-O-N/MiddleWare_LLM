@@ -1,5 +1,6 @@
 ﻿using ChatManagement.Model.Chat;
 using LLM_API.Interfaces;
+using LLM_API.Service;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,6 +36,28 @@ namespace LLM_API.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("api/{provider}/chat")]
+        [Route("")]
+        public async Task<ChatOutput> HandleChat(string provider,[FromBody] ChatInput value)
+        {
+            string[] possible = ["huggingface", "openai", "azureopenai", "ollama"];
+            try
+            {
+                if (possible.Contains(provider, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    ChatOutput result = await _chatHandler.ProcessChat(value);
+                }
+                else
+                {
+                    return new ChatOutput() { error = "Following Provider not Exist" };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

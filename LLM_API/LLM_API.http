@@ -3,4 +3,6 @@
 GET {{RAG_API_HostAddress}}/weatherforecast/
 Accept: application/json
 
+
 ###
+POST {{RAG_API_HostAddress}}/
